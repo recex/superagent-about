@@ -3,191 +3,416 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SuperAgent — Assistente AI para Discord</title>
+  <title>Bot Discord | Landing Page</title>
+  <meta name="description" content="Página oficial do bot para Discord com visual moderno, animação em Three.js e convite via OAuth2." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
   <style>
-    :root {
-      --bg: #0d1117;
-      --card: #161b22;
-      --accent: #58a6ff;
-      --text: #c9d1d9;
-      --muted: #8b949e;
-      --border: #30363d;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(13,17,23,.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
-    nav ul { list-style: none; display: flex; gap: 1.5rem; }
-    nav ul li a { color: var(--muted); font-size: .9rem; }
-    nav ul li a:hover { color: #fff; }
-
-    .hero {
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      background: radial-gradient(ellipse at 50% 0%, #1a3a5c 0%, transparent 70%);
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 1rem;
-    }
-    .hero h1 span { color: var(--accent); }
-    .hero p { max-width: 640px; margin: 0 auto; color: var(--muted); font-size: 1.1rem; }
-
-    .section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
-    .section h2 {
-      text-align: center; font-size: 1.8rem; color: #fff; margin-bottom: 3rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      transition: transform .2s, border-color .2s;
-    }
-    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .card .icon { font-size: 2rem; margin-bottom: 1rem; }
-    .card h3 { color: #fff; margin-bottom: .5rem; }
-    .card p { color: var(--muted); font-size: .95rem; }
-
-    .features {
-      display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center;
-      margin-top: 2rem;
-    }
-    .badge {
-      background: #1f2937;
-      border: 1px solid var(--border);
-      padding: .4rem 1rem;
-      border-radius: 999px;
-      font-size: .85rem;
-      color: var(--text);
+    :root{
+      --bg:#050816;
+      --panel:rgba(10, 14, 28, .68);
+      --panel-border:rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted:#9aa8c7;
+      --accent:#7c5cff;
+      --accent2:#28d7ff;
+      --success:#30d158;
+      --shadow:0 20px 80px rgba(0,0,0,.45);
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: .85rem;
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:Inter,system-ui,sans-serif;background:radial-gradient(circle at top,#111a39 0%,#050816 55%,#02030a 100%);color:var(--text);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+
+    #bg{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124,92,255,.18), transparent 24%),
+        radial-gradient(circle at 80% 30%, rgba(40,215,255,.12), transparent 22%),
+        radial-gradient(circle at 50% 80%, rgba(48,209,88,.08), transparent 18%);
+      z-index:1;
+      pointer-events:none;
+    }
+
+    .container{
+      position:relative;
+      z-index:2;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+
+    .hero{
+      width:min(1120px,100%);
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--panel-border);
+      backdrop-filter:blur(18px);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .content{
+      padding:44px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(124,92,255,.12);
+      border:1px solid rgba(124,92,255,.28);
+      color:#dcd3ff;
+      font-size:14px;
+      margin-bottom:20px;
+    }
+
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 16px rgba(48,209,88,.8);
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(2.5rem,5vw,4.8rem);
+      line-height:.95;
+      letter-spacing:-.05em;
+    }
+
+    .gradient{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .lead{
+      margin:18px 0 28px;
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.75;
+      max-width:58ch;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-bottom:28px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 20px;
+      border-radius:16px;
+      font-weight:700;
+      transition:.25s ease;
+      border:1px solid transparent;
+      will-change:transform;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#4e7cff);
+      box-shadow:0 12px 35px rgba(124,92,255,.35);
+    }
+
+    .btn-primary:hover{transform:translateY(-2px) scale(1.01)}
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.12);
+      color:#f1f4ff;
+    }
+
+    .btn-secondary:hover{transform:translateY(-2px);background:rgba(255,255,255,.07)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin-top:26px;
+    }
+
+    .feature{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .feature h3{
+      margin:0 0 8px;
+      font-size:1rem;
+    }
+
+    .feature p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.95rem;
+    }
+
+    .side{
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      min-height:560px;
+      display:flex;
+      align-items:flex-end;
+    }
+
+    .orb{
+      position:absolute;
+      inset:auto;
+      border-radius:50%;
+      filter:blur(18px);
+      opacity:.85;
+      animation:float 7s ease-in-out infinite;
+    }
+
+    .orb.one{width:220px;height:220px;background:rgba(124,92,255,.28);top:32px;right:18px}
+    .orb.two{width:160px;height:160px;background:rgba(40,215,255,.18);bottom:28px;left:18px;animation-delay:-2s}
+
+    .info{
+      position:relative;
+      z-index:2;
+      width:100%;
+      padding:22px;
+      background:rgba(4,8,22,.6);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:22px;
+      backdrop-filter:blur(14px);
+    }
+
+    .info h2{
+      margin:0 0 10px;
+      font-size:1.15rem;
+    }
+
+    .info ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .floating-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:14px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(48,209,88,.12);
+      color:#c8fbd2;
+      border:1px solid rgba(48,209,88,.22);
+      font-size:.92rem;
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-14px) scale(1.04)}
+    }
+
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      .side{min-height:380px}
+      .content{padding:30px}
+    }
+
+    @media (max-width: 560px){
+      .container{padding:18px}
+      .content{padding:22px}
+      .grid{grid-template-columns:1fr}
+      .actions{flex-direction:column}
+      .btn{width:100%}
+      h1{font-size:2.6rem}
     }
   </style>
 </head>
 <body>
+  <div id="bg"></div>
+  <div class="overlay"></div>
 
-  <nav>
-    <div class="logo">🤖 SuperAgent</div>
-    <ul>
-      <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#habilidades">Habilidades</a></li>
-      <li><a href="#ferramentas">Ferramentas</a></li>
-    </ul>
-  </nav>
+  <main class="container">
+    <section class="hero">
+      <div class="card content">
+        <div class="badge"><span class="dot"></span> Bot ativo para servidores Discord</div>
+        <h1><span class="gradient">Xenoryx SuperAgent</span> crie, mande e teste.</h1>
+        <p class="lead">
+          SuperAgent é um bot autônomo para Discord que executa tarefas completas por conta própria — escreve e roda código, pesquisa e navega na web, lê e gera arquivos, e interage com o GitHub — usando modelos de linguagem gratuitos via OpenRouter.
+        </p>
 
-  <section class="hero">
-    <h1>Seu <span>SuperAgente</span> de IA</h1>
-    <p>
-      Opero dentro do Discord com acesso a sandbox Linux, navegador na nuvem,
-      busca web e GitHub. Executo código, publico sites, abro PRs e muito mais —
-      tudo para te ajudar no dia a dia.
-    </p>
-  </section>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1393361650391711885&permissions=6764487592373328&integration_type=0&scope=bot" target="_blank" rel="noopener noreferrer">
+            Convidar para o servidor
+          </a>
+          <a class="btn btn-secondary" href="#features">
+            Ver recursos
+          </a>
+        </div>
 
-  <section class="section" id="sobre">
-    <h2>Sobre Mim</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="icon">🧠</div>
-        <h3>Inteligência Artificial</h3>
-        <p>Sou um agente inteligente que entende linguagem natural, raciocina sobre tarefas complexas e executa ações no mundo real.</p>
+        <div class="grid" id="features">
+          <div class="feature">
+            <h3>Integração oficial</h3>
+            <p>Conectado ao Discord por meio da API e do sistema de autorização OAuth2.</p>
+          </div>
+          <div class="feature">
+            <h3>Eventos e comandos</h3>
+            <p>Em vez de responder apenas com texto, ele recebe uma tarefa em linguagem natural e a executa de ponta a ponta.</p>
+          </div>
+          <div class="feature">
+            <h3>Permissões controladas</h3>
+            <p>As permissões dependem do que o bot realmente precisa para funcionar.</p>
+          </div>
+          <div class="feature">
+            <h3>Experiência visual</h3>
+            <p>Fundo interativo em Three.js para dar presença sem exagerar nas promessas.</p>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <div class="icon">🐧</div>
-        <h3>Sandbox Linux</h3>
-        <p>Tenho acesso a um Ubuntu real via proot-distro. Rodo Python, Node.js, Bash e instalo qualquer coisa que precise.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🌐</div>
-        <h3>Navegador na Nuvem</h3>
-        <p>Quando web_fetch não basta, abro um Chromium real para sites com JavaScript, login ou interação dinâmica.</p>
-      </div>
-    </div>
-  </section>
 
-  <section class="section" id="habilidades">
-    <h2>O Que Posso Fazer</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="icon">📄</div>
-        <h3>Arquivos</h3>
-        <p>Ler, escrever e manipular qualquer arquivo no workspace persistente da sessão.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🚀</div>
-        <h3>Deploy</h3>
-        <p>Crio repositórios no GitHub e publico sites no Render com URL pública funcionando.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🔍</div>
-        <h3>Busca Web</h3>
-        <p>Busco informações na web, leio páginas e trago os resultados resumidos para você.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🐙</div>
-        <h3>GitHub</h3>
-        <p>Crio repositórios, branches, PRs, issues e edito arquivos diretamente nos seus projetos.</p>
-      </div>
-      <div class="card">
-        <div class="icon">💬</div>
-        <h3>Discord</h3>
-        <p>Opero como um bot dentro do Discord, enviando mensagens e arquivos para canais.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🧪</div>
-        <h3>Código</h3>
-        <p>Escrevo, executo e depuro código em Python, JavaScript, Bash e qualquer linguagem suportada.</p>
-      </div>
-    </div>
-  </section>
+      <aside class="card side">
+        <div class="orb one"></div>
+        <div class="orb two"></div>
 
-  <section class="section" id="ferramentas">
-    <h2>Ferramentas Disponíveis</h2>
-    <div class="features">
-      <span class="badge">run_shell 🐚</span>
-      <span class="badge">web_search 🔎</span>
-      <span class="badge">web_fetch 🌍</span>
-      <span class="badge">browser_use 🖥️</span>
-      <span class="badge">read_file 📄</span>
-      <span class="badge">write_file ✏️</span>
-      <span class="badge">send_file 📎</span>
-      <span class="badge">github_* 🐙</span>
-      <span class="badge">render_deploy 🚀</span>
-    </div>
-  </section>
+        <div class="info">
+          <h2>O que este bot faz</h2>
+          <ul>
+            <li>Interage com servidores via API oficial do Discord.</li>
+            <li>O agente tem acesso a um ambiente de execução isolado onde roda código e comandos de shell de verdade</li>
+            <li>Também consegue pesquisar na web e controlar um navegador real na nuvem para acessar sites que exigem interação, login ou JavaScript. Arquivos gerados durante uma tarefa — sejam scripts, planilhas, imagens ou documentos — são entregues como anexos reais no Discord, prontos para uso.</li>
+            <li>Cada usuário pode conectar sua própria conta do GitHub por OAuth, permitindo que o agente leia repositórios, crie commits, abra branches e Pull Requests.</li>
+          </ul>
+          <div class="floating-tag">Three.js + Discord Bot</div>
+        </div>
+      </aside>
+    </section>
+  </main>
 
-  <footer>
-    🤖 SuperAgent operando no Discord · Sandbox Ubuntu · Render deploy
-  </footer>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x050816, 8, 24);
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.8, 7.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.getElementById('bg').appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.enableZoom = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.8;
+
+    const ambient = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambient);
+
+    const key = new THREE.DirectionalLight(0x9f7bff, 2.2);
+    key.position.set(4, 6, 5);
+    scene.add(key);
+
+    const fill = new THREE.DirectionalLight(0x34d7ff, 1.2);
+    fill.position.set(-5, -2, 4);
+    scene.add(fill);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const geo = new THREE.IcosahedronGeometry(1.45, 1);
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x7c5cff,
+      roughness: 0.25,
+      metalness: 0.7,
+      emissive: 0x120b2e,
+      emissiveIntensity: 0.8
+    });
+    const core = new THREE.Mesh(geo, mat);
+    group.add(core);
+
+    const wire = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.58, 0),
+      new THREE.MeshBasicMaterial({ color: 0x28d7ff, wireframe: true, transparent: true, opacity: 0.35 })
+    );
+    group.add(wire);
+
+    const particlesGeo = new THREE.BufferGeometry();
+    const count = 700;
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 18;
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+    const particles = new THREE.Points(
+      particlesGeo,
+      new THREE.PointsMaterial({ color: 0xffffff, size: 0.025, transparent: true, opacity: 0.9 })
+    );
+    scene.add(particles);
+
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      core.rotation.x = t * 0.28;
+      core.rotation.y = t * 0.38;
+      wire.rotation.x = -t * 0.18;
+      wire.rotation.y = t * 0.24;
+      particles.rotation.y = t * 0.035;
+      group.position.y = Math.sin(t * 1.2) * 0.08;
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+  </script>
 </body>
 </html>
