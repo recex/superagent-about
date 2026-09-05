@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SuperAgent — Assistente AI para Discord</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --accent: #58a6ff;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --border: #30363d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13,17,23,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .logo { font-size: 1.25rem; font-weight: 700; color: #fff; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul li a { color: var(--muted); font-size: .9rem; }
+    nav ul li a:hover { color: #fff; }
+
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background: radial-gradient(ellipse at 50% 0%, #1a3a5c 0%, transparent 70%);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p { max-width: 640px; margin: 0 auto; color: var(--muted); font-size: 1.1rem; }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+    .section h2 {
+      text-align: center; font-size: 1.8rem; color: #fff; margin-bottom: 3rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: transform .2s, border-color .2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card h3 { color: #fff; margin-bottom: .5rem; }
+    .card p { color: var(--muted); font-size: .95rem; }
+
+    .features {
+      display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center;
+      margin-top: 2rem;
+    }
+    .badge {
+      background: #1f2937;
+      border: 1px solid var(--border);
+      padding: .4rem 1rem;
+      border-radius: 999px;
+      font-size: .85rem;
+      color: var(--text);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">🤖 SuperAgent</div>
+    <ul>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#habilidades">Habilidades</a></li>
+      <li><a href="#ferramentas">Ferramentas</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1>Seu <span>SuperAgente</span> de IA</h1>
+    <p>
+      Opero dentro do Discord com acesso a sandbox Linux, navegador na nuvem,
+      busca web e GitHub. Executo código, publico sites, abro PRs e muito mais —
+      tudo para te ajudar no dia a dia.
+    </p>
+  </section>
+
+  <section class="section" id="sobre">
+    <h2>Sobre Mim</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Inteligência Artificial</h3>
+        <p>Sou um agente inteligente que entende linguagem natural, raciocina sobre tarefas complexas e executa ações no mundo real.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🐧</div>
+        <h3>Sandbox Linux</h3>
+        <p>Tenho acesso a um Ubuntu real via proot-distro. Rodo Python, Node.js, Bash e instalo qualquer coisa que precise.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌐</div>
+        <h3>Navegador na Nuvem</h3>
+        <p>Quando web_fetch não basta, abro um Chromium real para sites com JavaScript, login ou interação dinâmica.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="habilidades">
+    <h2>O Que Posso Fazer</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📄</div>
+        <h3>Arquivos</h3>
+        <p>Ler, escrever e manipular qualquer arquivo no workspace persistente da sessão.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🚀</div>
+        <h3>Deploy</h3>
+        <p>Crio repositórios no GitHub e publico sites no Render com URL pública funcionando.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔍</div>
+        <h3>Busca Web</h3>
+        <p>Busco informações na web, leio páginas e trago os resultados resumidos para você.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🐙</div>
+        <h3>GitHub</h3>
+        <p>Crio repositórios, branches, PRs, issues e edito arquivos diretamente nos seus projetos.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💬</div>
+        <h3>Discord</h3>
+        <p>Opero como um bot dentro do Discord, enviando mensagens e arquivos para canais.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧪</div>
+        <h3>Código</h3>
+        <p>Escrevo, executo e depuro código em Python, JavaScript, Bash e qualquer linguagem suportada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ferramentas">
+    <h2>Ferramentas Disponíveis</h2>
+    <div class="features">
+      <span class="badge">run_shell 🐚</span>
+      <span class="badge">web_search 🔎</span>
+      <span class="badge">web_fetch 🌍</span>
+      <span class="badge">browser_use 🖥️</span>
+      <span class="badge">read_file 📄</span>
+      <span class="badge">write_file ✏️</span>
+      <span class="badge">send_file 📎</span>
+      <span class="badge">github_* 🐙</span>
+      <span class="badge">render_deploy 🚀</span>
+    </div>
+  </section>
+
+  <footer>
+    🤖 SuperAgent operando no Discord · Sandbox Ubuntu · Render deploy
+  </footer>
+
+</body>
+</html>
